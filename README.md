@@ -1,40 +1,197 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Next.js Boilerplate com TypeScript, Jest, Axios e React Context
 
-## Getting Started
+Este boilerplate foi criado para acelerar o desenvolvimento com Next.js usando TypeScript, testes unitários com Jest e React Testing Library, configuração centralizada de Axios e uma estrutura organizada. Também inclui exemplo de React Context para comunicação entre componentes.
 
-First, run the development server:
+---
+
+## 📁 Estrutura do Projeto
+
+/src
+├── components/ # Componentes React reutilizáveis
+├── contexts/ # React Contexts para estado global
+├── hooks/ # Custom React hooks
+├── lib/ # Configurações externas (ex: axios config)
+├── pages/ # Páginas Next.js (rotas)
+├── utils/ # Funções utilitárias gerais
+├── styles/ # Arquivos CSS/SCSS globais ou específicos
+
+yaml
+Copiar
+Editar
+
+---
+
+## ⚙️ Como usar
+
+### 1. Instalar dependências
+
+```bash
+npm install
+```
+
+### 2. Rodar o servidor de desenvolvimento
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse http://localhost:3000
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 3. Rodar testes unitários
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+npm test
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🧪 Testes Unitários
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Os testes ficam próximos aos arquivos testados, com extensão .test.ts ou .test.tsx.
 
-## Learn More
+## 📦 Configuração Axios Exemplo
 
-To learn more about Next.js, take a look at the following resources:
+Arquivo: /src/lib/axios.ts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+```js
+import axios from "axios";
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://api.example.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
-## Deploy on Vercel
+export default axiosInstance;
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔄 React Context - Comunicação entre componentes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Exemplo de um contexto para compartilhar e alterar um texto entre componentes.
+
+```js
+// src/contexts/MyContext.tsx
+import React, { createContext, useState, ReactNode, useContext } from "react";
+
+interface MyContextType {
+  text: string;
+  setText: (newText: string) => void;
+}
+
+const MyContext = (createContext < MyContextType) | (undefined > undefined);
+
+export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [text, setText] = useState("Texto inicial");
+
+  return (
+    <MyContext.Provider value={{ text, setText }}>
+      {children}
+    </MyContext.Provider>
+  );
+};
+
+export function useMyContext() {
+  const context = useContext(MyContext);
+  if (!context)
+    throw new Error("useMyContext deve ser usado dentro de um MyProvider");
+  return context;
+}
+```
+
+### exemplo uso contexto components
+
+```js
+// src/components/Updater.tsx
+import React from "react";
+import { useMyContext } from "../contexts/MyContext";
+
+const Updater: React.FC = () => {
+  const { setText } = useMyContext();
+
+  return (
+    <button onClick={() => setText("Texto alterado pelo Updater!")}>
+      Alterar Texto
+    </button>
+  );
+};
+export default Updater;
+```
+
+```js
+// src/components/Display.tsx
+import React from "react";
+import { useMyContext } from "../contexts/MyContext";
+
+const Display: React.FC = () => {
+  const { text } = useMyContext();
+
+  return <div>Texto do contexto: {text}</div>;
+};
+
+export default Display;
+```
+
+## Usando o Provider no topo da árvore (exemplo em página)
+
+```js
+// src/pages/example.tsx
+import React from "react";
+import { MyProvider } from "../contexts/MyContext";
+import Updater from "../components/Updater";
+import Display from "../components/Display";
+
+const ExamplePage: React.FC = () => {
+  return (
+    <MyProvider>
+      <h1>Exemplo React Context</h1>
+      <Updater />
+      <Display />
+    </MyProvider>
+  );
+};
+
+export default ExamplePage;
+```
+
+## 📑 Scripts no package.json
+
+```js
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  }
+}
+```
+
+## 📋 Exemplo de teste unitário para componente com React Testing Library
+
+```js
+// src/components/Updater.test.tsx
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { MyProvider } from "../contexts/MyContext";
+import Updater from "./Updater";
+import Display from "./Display";
+
+describe("React Context integration", () => {
+  it("updates text in Display when Updater button is clicked", () => {
+    render(
+      <MyProvider>
+        <Updater />
+        <Display />
+      </MyProvider>
+    );
+
+    expect(screen.getByText(/Texto inicial/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Alterar Texto/i }));
+
+    expect(
+      screen.getByText(/Texto alterado pelo Updater!/i)
+    ).toBeInTheDocument();
+  });
+});
+```
