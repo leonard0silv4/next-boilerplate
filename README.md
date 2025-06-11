@@ -6,18 +6,23 @@ Este boilerplate foi criado para acelerar o desenvolvimento com Next.js usando T
 
 ## 📁 Estrutura do Projeto
 
-/src
-├── components/ # Componentes React reutilizáveis
-├── contexts/ # React Contexts para estado global
-├── hooks/ # Custom React hooks
-├── lib/ # Configurações externas (ex: axios config)
-├── pages/ # Páginas Next.js (rotas)
-├── utils/ # Funções utilitárias gerais
-├── styles/ # Arquivos CSS/SCSS globais ou específicos
+```yaml
+src
 
-yaml
-Copiar
-Editar
+├── components/ # Componentes React reutilizáveis
+
+├── contexts/ # React Contexts para estado global
+
+├── hooks/ # Custom React hooks
+
+├── lib/ # Configurações externas (ex: axios config)
+
+├── pages/ # Páginas Next.js (rotas)
+
+├── utils/ # Funções utilitárias gerais
+
+├── styles/ # Arquivos CSS/SCSS globais ou específicos
+```
 
 ---
 
