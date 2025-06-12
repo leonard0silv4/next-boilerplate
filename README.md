@@ -34,7 +34,7 @@ src
 npm install
 ```
 
-### 2. Rodar o servidor de desenvolvimento
+### 2. Rodar o servidor de desenvolvimento projeto isolado
 
 ```bash
 npm run dev
@@ -47,6 +47,22 @@ Acesse http://localhost:3000
 ```bash
 npm test
 ```
+
+### 3. Rodar o servidor de desenvolvimento projeto docker
+
+produção
+
+```bash
+docker-compose up --build
+```
+
+desenvolvimento
+
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+Acesse http://localhost:3000
 
 ## 🧪 Testes Unitários
 
