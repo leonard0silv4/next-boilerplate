@@ -1,0 +1,10 @@
+{
+    "instructions": {
+        "title": "Getting started instructions",
+        "install": "Install dependencies using",
+        "runDev": "Start development server with",
+        "access": "Open",
+        "test": "To run unit tests, use",
+        "readme": "For more information, read the README.me file in the project root."
+    }
+}

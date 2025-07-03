@@ -1,0 +1,10 @@
+{
+    "instructions": {
+        "title": "Instruções para começar",
+        "install": "Instale as dependências com",
+        "runDev": "Execute o servidor de desenvolvimento com",
+        "access": "Acesse",
+        "test": "Para rodar os testes unitários, use",
+        "readme": "Para mais informações leia o arquivo README.me na raiz do projeto."
+    }
+}
