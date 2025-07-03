@@ -216,3 +216,13 @@ describe("React Context integration", () => {
   });
 });
 ```
+
+## 📋 Sobre internacionalização
+
+Os arquivos de mapeamento das internacionalizações ficam em
+public/locales/en-US/common.json
+public/locales/pt-BR/common.json
+
+no src/pages/index.tsx tem exemplo de como internacionalizar conteúdos
+
+as rotas ficam {meuEndereco} listam como default pt-BR e {meuEndereco}/en-US consome a internacionalização
