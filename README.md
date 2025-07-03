@@ -240,7 +240,7 @@ public/
 
 💡 Como trocar de idioma
 
-O componente Home inclui uma interface para troca de idioma com botões de bandeiras no canto superior direito da tela.
+O componente Home inclui uma interface para troca de idioma com botões de bandeiras.
 Ao clicar em uma bandeira, o idioma da interface é alterado e a rota é atualizada automaticamente.
 
 ```
