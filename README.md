@@ -217,12 +217,37 @@ describe("React Context integration", () => {
 });
 ```
 
-## 📋 Sobre internacionalização
+## 🌍 Internacionalização (i18n)
 
-Os arquivos de mapeamento das internacionalizações ficam em
-public/locales/en-US/common.json
-public/locales/pt-BR/common.json
+Este projeto suporta múltiplos idiomas utilizando next-i18next, com roteamento baseado em subpath (/pt-BR, /en-US) e troca dinâmica de idioma via bandeiras no topo da interface.
 
-no src/pages/index.tsx tem exemplo de como internacionalizar conteúdos
+Idiomas disponíveis
+🇧🇷 Português (Brasil) — /pt-BR
 
-as rotas ficam {meuEndereco} listam como default pt-BR e {meuEndereco}/en-US consome a internacionalização
+🇺🇸 Inglês (Estados Unidos) — /en-US
+
+📁 Estrutura de traduções
+As traduções estão localizadas em:
+
+```
+public/
+└── locales/
+    ├── pt-BR/
+    │   └── common.json
+    └── en-US/
+        └── common.json
+```
+
+💡 Como trocar de idioma
+
+O componente Home inclui uma interface para troca de idioma com botões de bandeiras no canto superior direito da tela.
+Ao clicar em uma bandeira, o idioma da interface é alterado e a rota é atualizada automaticamente.
+
+```
+const changeLanguage = (lng: string) => {
+  router.push(asPath, asPath, { locale: lng });
+};
+```
+
+🔁 Roteamento automático
+A troca de idioma atualiza a rota atual com o novo locale usando o Next.js router, preservando a navegação atual.
